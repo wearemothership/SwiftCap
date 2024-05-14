@@ -23,10 +23,9 @@
 /* Begin PBXFileReference section */
 		170297D22BCD525F0035EB26 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
 		170297D52BCD586A0035EB26 /* Updates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Updates.swift; sourceTree = "<group>"; };
-		17322D472958D07E00185BB6 /* Azayaka.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Azayaka.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		17322D472958D07E00185BB6 /* SwiftCap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftCap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		17322D4A2958D07E00185BB6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		17322D4E2958D08000185BB6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		17322D532958D08000185BB6 /* Azayaka.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Azayaka.entitlements; sourceTree = "<group>"; };
 		17322D592959286100185BB6 /* Processing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Processing.swift; sourceTree = "<group>"; };
 		17322D5B295928BE00185BB6 /* Recording.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recording.swift; sourceTree = "<group>"; };
 		17322D5D295929A000185BB6 /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
@@ -35,6 +34,7 @@
 		18B09AB82BCB6D74005CDC4E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		18B09ABA2BCB6D8D005CDC4E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		18B09ABB2BCBA40B005CDC4E /* MenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBar.swift; sourceTree = "<group>"; };
+		F05FFCD52BF3654C0015988C /* SwiftCap.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = SwiftCap.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +52,7 @@
 		17322D3E2958D07D00185BB6 = {
 			isa = PBXGroup;
 			children = (
-				17322D492958D07E00185BB6 /* Azayaka */,
+				17322D492958D07E00185BB6 /* SwiftCap */,
 				17322D482958D07E00185BB6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -60,12 +60,12 @@
 		17322D482958D07E00185BB6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				17322D472958D07E00185BB6 /* Azayaka.app */,
+				17322D472958D07E00185BB6 /* SwiftCap.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		17322D492958D07E00185BB6 /* Azayaka */ = {
+		17322D492958D07E00185BB6 /* SwiftCap */ = {
 			isa = PBXGroup;
 			children = (
 				17322D4A2958D07E00185BB6 /* AppDelegate.swift */,
@@ -78,17 +78,17 @@
 				170297D52BCD586A0035EB26 /* Updates.swift */,
 				18B09AB92BCB6D74005CDC4E /* Localizable.strings */,
 				17322D4E2958D08000185BB6 /* Assets.xcassets */,
-				17322D532958D08000185BB6 /* Azayaka.entitlements */,
+				F05FFCD52BF3654C0015988C /* SwiftCap.entitlements */,
 			);
-			path = Azayaka;
+			path = SwiftCap;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		17322D462958D07E00185BB6 /* Azayaka */ = {
+		17322D462958D07E00185BB6 /* SwiftCap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 17322D562958D08000185BB6 /* Build configuration list for PBXNativeTarget "Azayaka" */;
+			buildConfigurationList = 17322D562958D08000185BB6 /* Build configuration list for PBXNativeTarget "SwiftCap" */;
 			buildPhases = (
 				17322D432958D07E00185BB6 /* Sources */,
 				17322D442958D07E00185BB6 /* Frameworks */,
@@ -98,12 +98,12 @@
 			);
 			dependencies = (
 			);
-			name = Azayaka;
+			name = SwiftCap;
 			packageProductDependencies = (
 				175E293F2BD2C94D00EB9F4C /* KeyboardShortcuts */,
 			);
 			productName = Yamabiko;
-			productReference = 17322D472958D07E00185BB6 /* Azayaka.app */;
+			productReference = 17322D472958D07E00185BB6 /* SwiftCap.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -121,7 +121,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 17322D422958D07D00185BB6 /* Build configuration list for PBXProject "Azayaka" */;
+			buildConfigurationList = 17322D422958D07D00185BB6 /* Build configuration list for PBXProject "SwiftCap" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -139,7 +139,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				17322D462958D07E00185BB6 /* Azayaka */,
+				17322D462958D07E00185BB6 /* SwiftCap */,
 			);
 		};
 /* End PBXProject section */
@@ -314,20 +314,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Azayaka/Azayaka.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_ENTITLEMENTS = SwiftCap/SwiftCap.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 50;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8XJEGQ9B9C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Azayaka;
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftCap;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Azayaka needs this permission to record your microphone alongside your display's content.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SwiftCap needs this permission to record your microphone alongside your display's content.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -335,7 +335,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.mnpn.Azayaka;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mothership.SwiftCAp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_SWIFT_SYMBOLS = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -348,20 +348,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = Azayaka/Azayaka.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_ENTITLEMENTS = SwiftCap/SwiftCap.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 50;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8XJEGQ9B9C;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Azayaka;
+				INFOPLIST_KEY_CFBundleDisplayName = SwiftCap;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMicrophoneUsageDescription = "Azayaka needs this permission to record your microphone alongside your display's content.";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "SwiftCap needs this permission to record your microphone alongside your display's content.";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -369,7 +369,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.3;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.mnpn.Azayaka;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mothership.SwiftCAp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_SWIFT_SYMBOLS = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -380,7 +380,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		17322D422958D07D00185BB6 /* Build configuration list for PBXProject "Azayaka" */ = {
+		17322D422958D07D00185BB6 /* Build configuration list for PBXProject "SwiftCap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				17322D542958D08000185BB6 /* Debug */,
@@ -389,7 +389,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		17322D562958D08000185BB6 /* Build configuration list for PBXNativeTarget "Azayaka" */ = {
+		17322D562958D08000185BB6 /* Build configuration list for PBXNativeTarget "SwiftCap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				17322D572958D08000185BB6 /* Debug */,

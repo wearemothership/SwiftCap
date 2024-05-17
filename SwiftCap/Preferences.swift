@@ -294,7 +294,7 @@ struct Preferences: View {
     }
     
     struct OtherSettings: View {
-        @AppStorage(updateCheck) private var _updateCheck: Bool = true
+        @AppStorage(updateCheck) private var _updateCheck: Bool = false
         @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
         var body: some View {
@@ -315,7 +315,8 @@ struct Preferences: View {
                       }
                       Toggle(isOn: $_updateCheck) {
                         Text("Check for updates at launch")
-                      }
+                              .foregroundColor(Color.gray)
+                      }.disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
                     }
                     .toggleStyle(.switch)
                     .formStyle(.grouped)

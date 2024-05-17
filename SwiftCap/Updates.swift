@@ -26,16 +26,16 @@ class Updates {
     }
 
     func checkForUpdates() {
-        let task = URLSession.shared.dataTask(with: URL(string: GHAPI_RELEASES_URL)!, completionHandler: { [self] (data, response, error) -> Void in
-            if error == nil {
-                let jsonResponse = data!
-                do {
-                    let releaseData = try JSONDecoder().decode([FailableDecodable<GHRelease>].self, from: jsonResponse).compactMap { $0.base }
-                    updateVersion = String((releaseData.first?.tag_name.dropFirst())!) // "v1.2" -> "1.2"
-                } catch { print("update check failed: " + error.localizedDescription); return }
-            }
-        })
-        task.resume()
+//        let task = URLSession.shared.dataTask(with: URL(string: GHAPI_RELEASES_URL)!, completionHandler: { [self] (data, response, error) -> Void in
+//            if error == nil {
+//                let jsonResponse = data!
+//                do {
+//                    let releaseData = try JSONDecoder().decode([FailableDecodable<GHRelease>].self, from: jsonResponse).compactMap { $0.base }
+//                    updateVersion = String((releaseData.first?.tag_name.dropFirst())!) // "v1.2" -> "1.2"
+//                } catch { print("update check failed: " + error.localizedDescription); return }
+//            }
+//        })
+//        task.resume()
     }
 
     @objc private func openUpdatePage() { } // erhm..

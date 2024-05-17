@@ -102,8 +102,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCStreamDelegate, SCStreamOu
             UpdateHandler.checkForUpdates()
         }
         #endif
-        
-        requestPermissions()
     }
 
     func updateAvailableContent(buildMenu: Bool) async -> Bool { // returns status of getting content from SCK
@@ -140,31 +138,33 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCStreamDelegate, SCStreamOu
     }
 
     func requestPermissions() {
-        print("Checking permissions...")
-        
-        // Check and request Accessibility permissions
-        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String : true]
-        let accessEnabled = AXIsProcessTrustedWithOptions(options)
-        
-        if !accessEnabled {
-            print("Accessibility Access Not Enabled")
-            // Open Accessibility settings
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            print("Checking permissions...")
+            let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String : true]
+            let accessEnabled = AXIsProcessTrustedWithOptions(options)
+            
+            if !accessEnabled {
+                print("Access Not Enabled")
                 NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
             }
         }
-        
-        // Check and request Screen Recording permissions
-        let screenRecordingStatus = CGPreflightScreenCaptureAccess()
-        if !screenRecordingStatus {
-            print("Screen Recording Access Not Enabled")
-            DispatchQueue.main.async {
-                CGRequestScreenCaptureAccess()
-                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture")!)
-            }
-        }
+//        DispatchQueue.main.async {
+//            let alert = NSAlert()
+//            alert.messageText = "SwiftCap needs permissions!".local
+//            alert.informativeText = "SwiftCap needs screen recording permissions, even if you only intend on recording audio.".local
+//            alert.addButton(withTitle: "Open Settings".local)
+//            alert.addButton(withTitle: "Okay".local)
+//            alert.addButton(withTitle: "No thanks, quit".local)
+//            alert.alertStyle = .informational
+//            switch(alert.runModal()) {
+//                case .alertFirstButtonReturn:
+//                    NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture")!)
+//                case .alertThirdButtonReturn: NSApp.terminate(self)
+//                default: return
+//            }
+//        }
     }
-
+    
     // a ScreenCaptureKit implementation does not work correctly, is it the order of the returned windows perhaps?
     // optionOnScreenOnly mentions "Windows are returned in order from front to back", which might be the magic here.
     func getFocusedWindowID() async -> CGWindowID? {

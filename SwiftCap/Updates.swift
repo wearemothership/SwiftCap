@@ -11,7 +11,7 @@ import AppKit
 class Updates {
     private var updateVersion: String?
     private let RELEASE_URL = "https://github.com/wearemothership/SwiftCap/releases/tag/v"
-    private let GHAPI_RELEASES_URL = "https://api.github.com/repos/Mnpn/wearemothership/releases"
+    private let GHAPI_RELEASES_URL = "https://api.github.com/repos/wearemothership/SwiftCap/releases"
     var updateURL: String {
         RELEASE_URL + updateVersion!
     }

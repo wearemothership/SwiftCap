@@ -16,30 +16,50 @@ struct Preferences: View {
     static let frontAppKey = "frontAppOnly"
     static let fileName = "outputFileName"
     
+    @State private var selectedTab: Tab = .video
+    
+    enum Tab: String, CaseIterable {
+        case video = "Video"
+        case audio = "Audio"
+        case destination = "Destination"
+        case shortcuts = "Shortcuts"
+        case other = "Other"
+    }
+    
     var body: some View {
-        VStack {
-            TabView {
-                VideoSettings().tabItem {
-                    Label("Video", systemImage: "rectangle.inset.filled.badge.record")
+        HStack {
+            List(Tab.allCases, id: \.self) { tab in
+                Button(action: { selectedTab = tab }) {
+                    Text(tab.rawValue)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(7)
+                        .background(selectedTab == tab ? Color.accentColor.opacity(1) : Color.clear)
+                        .foregroundColor(selectedTab == tab ? .white : .primary)
+                        .cornerRadius(7)
                 }
-
-                AudioSettings().tabItem {
-                    Label("Audio", systemImage: "waveform")
-                }
-
-                OutputSettings().tabItem {
-                    Label("Destination", systemImage: "folder")
-                }
-
-                ShortcutSettings().tabItem {
-                    Label("Shortcuts", systemImage: "keyboard")
-                }
-
-                OtherSettings().tabItem {
-                    Label("Other", systemImage: "gearshape")
+                .buttonStyle(PlainButtonStyle())
+            }
+            .frame(width: 200)
+            .listStyle(SidebarListStyle())
+            
+            VStack {
+                switch selectedTab {
+                case .video:
+                    VideoSettings()
+                case .audio:
+                    AudioSettings()
+                case .destination:
+                    OutputSettings()
+                case .shortcuts:
+                    ShortcutSettings()
+                case .other:
+                    OtherSettings()
                 }
             }
-        }.frame(width: 350)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .frame(width: 600, height: 700)
     }
 
     struct VideoSettings: View {
@@ -56,60 +76,67 @@ struct Preferences: View {
         @AppStorage("windowHeight") private var windowHeight: String = "1400"
 
         var body: some View {
-            GroupBox() {
-                Form() {
-                    Picker("FPS", selection: $frameRate) {
-                        Text("60").tag(60)
-                        Text("30").tag(30)
-                        Text("25").tag(25)
-                        Text("24").tag(24)
-                        Text("15").tag(15)
-                    }.padding([.leading, .trailing], 10)
-                    Picker("Resolution", selection: $highRes) {
-                        Text("Auto").tag(true)
-                        Text("Low (1x)").tag(false)
-                    }.padding([.leading, .trailing], 10)
-                    Picker("Quality", selection: $videoQuality) {
-                        Text("Low").tag(0.3)
-                        Text("Medium").tag(0.7)
-                        Text("High").tag(1.0)
-                    }.padding([.leading, .trailing], 10)
-                    Picker("Format", selection: $videoFormat) {
-                        Text("MOV").tag(VideoFormat.mov)
-                        Text("MP4").tag(VideoFormat.mp4)
-                    }.padding([.leading, .trailing], 10)
-                    Picker("Encoder", selection: $encoder) {
-                        Text("H.264").tag(Encoder.h264)
-                        Text("H.265").tag(Encoder.h265)
-                    }.padding([.leading, .trailing], 10)
-                    
-                    Toggle(isOn: $resizeWindow) {
-                        Text("Resize Window")
-                    }.toggleStyle(SwitchToggleStyle())
-                    .padding([.leading, .trailing], 10)
-                    
-                    if resizeWindow {
-                        TextField("Window Width", text: $windowWidth)
-                            .padding([.leading, .trailing], 10)
-                        
-                        TextField("Window Height", text: $windowHeight)
-                            .padding([.leading, .trailing], 10)
+            ScrollView {
+                Form {
+                        Picker("FPS", selection: $frameRate) {
+                            Text("60").tag(60)
+                            Text("30").tag(30)
+                            Text("25").tag(25)
+                            Text("24").tag(24)
+                            Text("15").tag(15)
+                        }
+                        Picker("Resolution", selection: $highRes) {
+                            Text("Auto").tag(true)
+                            Text("Low (1x)").tag(false)
+                        }
+                        Picker("Quality", selection: $videoQuality) {
+                            Text("Low").tag(0.3)
+                            Text("Medium").tag(0.7)
+                            Text("High").tag(1.0)
+                        }
+                        Picker("Format", selection: $videoFormat) {
+                            Text("MOV").tag(VideoFormat.mov)
+                            Text("MP4").tag(VideoFormat.mp4)
+                        }
+                        Picker("Encoder", selection: $encoder) {
+                            Text("H.264").tag(Encoder.h264)
+                            Text("H.265").tag(Encoder.h265)
+                        }
                     }
-                    
-                    
-                }.frame(maxWidth: 2200).padding(10)
-                VStack(alignment: .leading) {
-                    Toggle(isOn: $hideSelf) {
-                        Text("Exclude SwiftCap itself")
-                    }.toggleStyle(CheckboxToggleStyle())
-                    Toggle(isOn: $frontApp) {
-                        Text("Only list focused app's windows")
-                    }.toggleStyle(CheckboxToggleStyle())
-                    Toggle(isOn: $showMouse) {
+                    .toggleStyle(.switch)
+                    .formStyle(.grouped)
+                
+                Form {
+                      Toggle(isOn: $resizeWindow) {
+                        Text("Set window size")
+                      }
+                        TextField("Width", text: $windowWidth)
+                        .disabled(!resizeWindow)
+                        TextField("Height", text: $windowHeight)
+                        .disabled(!resizeWindow)
+                    }
+                    .toggleStyle(.switch)
+                    .formStyle(.grouped)
+                
+                Form {
+                      Toggle(isOn: $showMouse) {
                         Text("Show mouse cursor")
-                    }.toggleStyle(CheckboxToggleStyle())
-                }.frame(maxWidth: .infinity).padding([.leading, .trailing, .bottom], 10)
-            }.padding(10)
+                      }
+                    }
+                    .toggleStyle(.switch)
+                    .formStyle(.grouped)
+                
+                Form {
+                      Toggle(isOn: $hideSelf) {
+                        Text("Exclude SwiftCap")
+                      }
+                      Toggle(isOn: $frontApp) {
+                        Text("Only list focused windows")
+                      }
+                    }
+                    .toggleStyle(.switch)
+                    .formStyle(.grouped)
+            }
         }
     }
 
@@ -119,49 +146,53 @@ struct Preferences: View {
         @AppStorage("recordMic")    private var recordMic: Bool = false
 
         var body: some View {
-            GroupBox() {
-                VStack() {
-                    Form() {
-                        Picker("Format", selection: $audioFormat) {
-                            Text("AAC").tag(AudioFormat.aac)
-                            Text("ALAC (Lossless)").tag(AudioFormat.alac)
-                            Text("FLAC (Lossless)").tag(AudioFormat.flac)
-                            Text("Opus").tag(AudioFormat.opus)
-                        }.padding([.leading, .trailing], 10)
-                        Picker("Quality", selection: $audioQuality) {
-                            if audioFormat == .alac || audioFormat == .flac {
-                                Text("Lossless").tag(audioQuality)
-                            }
-                            Text("Normal - 128Kbps").tag(AudioQuality.normal)
-                            Text("Good - 192Kbps").tag(AudioQuality.good)
-                            Text("High - 256Kbps").tag(AudioQuality.high)
-                            Text("Extreme - 320Kbps").tag(AudioQuality.extreme)
-                        }.padding([.leading, .trailing], 10).disabled(audioFormat == .alac || audioFormat == .flac)
-                    }.frame(maxWidth: 250)
-                    Text("These settings are also used when recording video. If set to Opus, MP4 will fall back to AAC.")
-                        .font(.footnote).foregroundColor(Color.gray)
-                }.padding([.top, .leading, .trailing], 10)
-                Spacer(minLength: 5)
-                VStack() {
+            ScrollView {
+                Form {
+                    Picker("Format", selection: $audioFormat) {
+                        Text("AAC").tag(AudioFormat.aac)
+                        Text("ALAC (Lossless)").tag(AudioFormat.alac)
+                        Text("FLAC (Lossless)").tag(AudioFormat.flac)
+                        Text("Opus").tag(AudioFormat.opus)
+                    }.padding([.leading, .trailing], 10)
+                    Picker("Quality", selection: $audioQuality) {
+                        if audioFormat == .alac || audioFormat == .flac {
+                            Text("Lossless").tag(audioQuality)
+                        }
+                        Text("Normal - 128Kbps").tag(AudioQuality.normal)
+                        Text("Good - 192Kbps").tag(AudioQuality.good)
+                        Text("High - 256Kbps").tag(AudioQuality.high)
+                        Text("Extreme - 320Kbps").tag(AudioQuality.extreme)
+                    }.padding([.leading, .trailing], 10).disabled(audioFormat == .alac || audioFormat == .flac)
+                }
+                .toggleStyle(.switch)
+                .formStyle(.grouped)
+                
+                Text("These settings are also used when recording video. If set to Opus, MP4 will fall back to AAC.")
+                .font(.footnote).foregroundColor(Color.gray)
+                .padding(20.0)
+                
+                Form {
                     if #available(macOS 14, *) { // apparently they changed onChange in Sonoma
                         Toggle(isOn: $recordMic) {
                             Text("Record microphone")
-                        }.toggleStyle(CheckboxToggleStyle()).onChange(of: recordMic) {
+                        }.onChange(of: recordMic) {
                             Task { await performMicCheck() }
                         }
                     } else {
                         Toggle(isOn: $recordMic) {
                             Text("Record microphone")
-                        }.toggleStyle(CheckboxToggleStyle()).onChange(of: recordMic) { _ in
+                        }.onChange(of: recordMic) { _ in
                             Task { await performMicCheck() }
                         }
                     }
-                    Text("Doesn't apply to system audio-only recordings. The currently set input device will be used, and will be written as a separate audio track.")
-                        .font(.footnote).foregroundColor(Color.gray)
-                }.frame(maxWidth: .infinity).padding(10)
-            }.onAppear {
-                recordMic = recordMic && AVCaptureDevice.authorizationStatus(for: .audio) == .authorized // untick box if no perms
-            }.padding(10)
+                }
+                .toggleStyle(.switch)
+                .formStyle(.grouped)
+                
+                Text("Doesn't apply to system audio-only recordings. The currently set input device will be used, and will be written as a separate audio track.")
+                .font(.footnote).foregroundColor(Color.gray)
+                .padding(20.0)
+            }
         }
         
         func performMicCheck() async {
@@ -191,10 +222,12 @@ struct Preferences: View {
         private let dateFormatter = DateFormatter()
 
         var body: some View {
-            VStack() {
-                GroupBox() {
-                    VStack() {
-                        TextField("File name", text: $_fileName).frame(maxWidth: 250)
+            ScrollView {
+                Form {
+                    HStack() {
+                        Text("File Name")
+                        Spacer()
+                        TextField("", text: $_fileName).frame(maxWidth: 250)
                             .onChange(of: _fileName) { newText in
                                 fileNameLength = getFileNameLength(newText)
                             }
@@ -202,17 +235,21 @@ struct Preferences: View {
                                 dateFormatter.dateFormat = "y-MM-dd HH.mm.ss"
                                 fileNameLength = getFileNameLength(_fileName)
                             }
-                            .foregroundStyle(fileNameLength > NAME_MAX ? .red : .primary)
-                        Text("\"%t\" will be replaced with the recording's start time.")
-                            .font(.subheadline).foregroundColor(Color.gray)
-                    }.padding(10).frame(maxWidth: .infinity)
-                }.padding([.top, .leading, .trailing], 10)
-                GroupBox() {
-                    VStack(spacing: 2) {
-                        Button("Select output directory", action: updateOutputDirectory)
-                        Text(String(format: "Currently set to \"%@\"".local, URL(fileURLWithPath: saveDirectory!).lastPathComponent)).font(.subheadline).foregroundColor(Color.gray)
-                    }.padding(10).frame(maxWidth: .infinity)
-                }.padding([.bottom, .leading, .trailing], 10)
+                    }
+                }
+                .formStyle(.grouped)
+                
+                Text("\"%t\" will be replaced with the recording's start time.")
+                    .font(.subheadline).foregroundColor(Color.gray)
+                    .padding(20.0)
+                
+                Form {
+                    HStack() {
+                        Text("Save to")
+                        Spacer()
+                        Button(String(format: "%@".local, URL(fileURLWithPath: saveDirectory!).lastPathComponent), action: updateOutputDirectory)
+                    }
+                }.formStyle(.grouped)
             }.onTapGesture {
                 DispatchQueue.main.async { // because the textfield likes focus..
                     NSApp.keyWindow?.makeFirstResponder(nil)
@@ -243,16 +280,16 @@ struct Preferences: View {
             ("Record focused window".local, .recordCurrentWindow)
         ]
         var body: some View {
-            VStack() {
-                GroupBox() {
-                    Form() {
-                        ForEach(thing, id: \.1) { shortcut in
-                            KeyboardShortcuts.Recorder(shortcut.0, name: shortcut.1).padding([.leading, .trailing], 10).padding(.bottom, 4)
-                        }
-                    }.frame(alignment: .center).padding([.leading, .trailing], 2).padding(.top, 10)
-                    Text("Recordings can be stopped with the same shortcut.").font(.subheadline).foregroundColor(Color.gray).padding(.bottom, 10)
-                }.padding(10)
-            }
+            ScrollView {
+                Form() {
+                    ForEach(thing, id: \.1) { shortcut in
+                        KeyboardShortcuts.Recorder(shortcut.0, name: shortcut.1)
+                    }
+                }
+                Text("Recordings can be stopped with the same shortcut.")
+                    .font(.subheadline).foregroundColor(Color.gray)
+                    .padding(20.00)
+            }.formStyle(.grouped)
         }
     }
     
@@ -261,34 +298,50 @@ struct Preferences: View {
         @State private var launchAtLogin = SMAppService.mainApp.status == .enabled
 
         var body: some View {
-            VStack {
-                GroupBox() {
-                    VStack(alignment: .leading) {
-                        Toggle(isOn: $launchAtLogin) {
-                            Text("Launch at login")
-                        }.onChange(of: launchAtLogin) { newValue in
-                            do {
-                                if newValue {
-                                    try SMAppService.mainApp.register()
-                                } else {
-                                    try SMAppService.mainApp.unregister()
-                                }
-                            } catch {
-                                print("Failed to \(newValue ? "enable" : "disable") launch at login: \(error.localizedDescription)")
-                            }
-                        }
-                        Toggle(isOn: $_updateCheck) {
-                            Text("Check for updates at launch")
-                        }
-                    }.padding([.top, .leading, .trailing], 10).frame(width: 250)
-                    Text("SwiftCap will check [GitHub](https://github.com/wearemothership/SwiftCap/releases) for new updates.")
-                        .font(.footnote).foregroundColor(Color.gray).frame(maxWidth: .infinity).padding([.bottom, .leading, .trailing], 10)
-                }.padding([.top, .leading, .trailing], 10)
-                HStack {
-                    Text("SwiftCap \(getVersion()) (\(getBuild()))").foregroundColor(Color.secondary)
-                    Spacer()
-                    Text("https://wearemothership.com")
-                }.padding(12).background { VisualEffectView() }.frame(height: 42)
+            ScrollView {
+                Form {
+                      Toggle(isOn: $launchAtLogin) {
+                        Text("Launch at login")
+                      }.onChange(of: launchAtLogin) { newValue in
+                          do {
+                              if newValue {
+                                  try SMAppService.mainApp.register()
+                              } else {
+                                  try SMAppService.mainApp.unregister()
+                              }
+                          } catch {
+                              print("Failed to \(newValue ? "enable" : "disable") launch at login: \(error.localizedDescription)")
+                          }
+                      }
+                      Toggle(isOn: $_updateCheck) {
+                        Text("Check for updates at launch")
+                      }
+                    }
+                    .toggleStyle(.switch)
+                    .formStyle(.grouped)
+                
+                Text("SwiftCap will check [GitHub](https://github.com/wearemothership/SwiftCap/releases) for new updates.")
+                    .font(.footnote).foregroundColor(Color.gray)
+                    .padding(20.00)
+                
+                Form {
+                    HStack {
+                        Text("Version")
+                        Spacer()
+                        Text("\(getVersion()) (\(getBuild()))")
+                    }
+                    HStack {
+                        Text("Made by")
+                        Spacer()
+                        Text("[Mothership](https://wearemothership.com)")
+                    }
+                }
+                .toggleStyle(.switch)
+                .formStyle(.grouped)
+                
+                Text("SwiftCap is based on the great app [Azayaka](https://github.com/Mnpn/Azayaka)")
+                    .font(.footnote).foregroundColor(Color.gray)
+                    .padding(20.00)
             }
         }
 

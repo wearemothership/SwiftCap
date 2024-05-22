@@ -67,7 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCStreamDelegate, SCStreamOu
                 "frameRate": 30,
                 "videoQuality": 1.0,
                 "videoFormat": VideoFormat.mp4.rawValue,
-                "encoder": Encoder.h264.rawValue,
+                "encoder": Encoder.h265.rawValue,
                 "saveDirectory": saveDirectory,
                 "hideSelf": true,
                 Preferences.frontAppKey: false,
@@ -75,7 +75,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCStreamDelegate, SCStreamOu
                 "recordMic": false,
                 "highRes": true,
                 Preferences.updateCheck: false,
-                Preferences.fileName: "Recording at %t".local
+                Preferences.fileName: "Recording at %t".local,
+				"resizeWindow": true,
+				"windowWidth": "2000",
+				"windowHeight": "1400"
             ]
         )
         // create a menu bar item

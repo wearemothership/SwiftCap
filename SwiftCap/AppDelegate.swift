@@ -67,7 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCStreamDelegate, SCStreamOu
                 "frameRate": 30,
                 "videoQuality": 1.0,
                 "videoFormat": VideoFormat.mp4.rawValue,
-                "encoder": Encoder.h264.rawValue,
+                "encoder": Encoder.h265.rawValue,
                 "saveDirectory": saveDirectory,
                 "hideSelf": true,
                 Preferences.frontAppKey: false,
